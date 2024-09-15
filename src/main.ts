@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { AllExeptionFilter } from './common/filters/all-exception.filter';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import helmet from 'helmet';
 import compression from 'compression';
 
 async function bootstrap() {
@@ -18,11 +17,6 @@ async function bootstrap() {
         //"preflightContinue": false,
     }
 
-    const helmetOptions = {
-        crossOriginEmbedderPolicy: false,
-    }
-
-    app.use(helmet(helmetOptions))
     app.use(compression())
     app.setGlobalPrefix('api')
     app.useGlobalFilters(new AllExeptionFilter())
