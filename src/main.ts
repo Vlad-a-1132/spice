@@ -13,7 +13,7 @@ async function bootstrap() {
     console.log("port: " + port)
 
     const corsOptions = {
-
+        origin: "*"
     }
 
     const helmetOptions = {
