@@ -13,7 +13,9 @@ async function bootstrap() {
     console.log("port: " + port)
 
     const corsOptions = {
-        origin: "*"
+        origin: "*",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        //"preflightContinue": false,
     }
 
     const helmetOptions = {
