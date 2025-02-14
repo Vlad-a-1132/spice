@@ -9,18 +9,19 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const configService = app.get(ConfigService);
     const port = configService.get<number>('port');
-    console.log("port: " + port)
+    console.log("port: " + port);
 
     const corsOptions = {
         origin: ["https://princess-spice-admin.vercel.app", "https://princessspice.ru"],
-        methods: "OPTION,GET,HEAD,PUT,PATCH,POST,DELETE",
-        //"preflightContinue": false,
-    }
+        methods: "OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE", // Исправлено на "OPTIONS"
+        allowedHeaders: "Content-Type, Authorization", // Разрешенные заголовки
+        credentials: true, // Разрешить передачу куки и заголовков авторизации
+    };
 
-    app.use(compression())
-    app.setGlobalPrefix('api')
-    app.useGlobalFilters(new AllExeptionFilter())
-    app.enableCors()
+    app.use(compression());
+    app.setGlobalPrefix('api');
+    app.useGlobalFilters(new AllExeptionFilter());
+    app.enableCors(corsOptions); // Передаем corsOptions здесь
 
     const config = new DocumentBuilder()
         .setTitle('Spice API')
@@ -30,10 +31,9 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('doc', app, document);
 
-    await app.listen(<number>port,
-                     () => {
-                         console.log(`Server is running http://localhost:${port}`)
-                     });
+    await app.listen(<number>port, () => {
+        console.log(`Server is running http://localhost:${port}`);
+    });
 }
 
 bootstrap();
