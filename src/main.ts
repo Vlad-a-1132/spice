@@ -12,7 +12,7 @@ async function bootstrap() {
     console.log("port: " + port)
 
     const corsOptions = {
-        origin: "*",
+        origin: ["https://princess-spice-admin.vercel.app", "https://princessspice.ru"],
         methods: "OPTION,GET,HEAD,PUT,PATCH,POST,DELETE",
         //"preflightContinue": false,
     }
